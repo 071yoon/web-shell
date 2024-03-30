@@ -15,7 +15,7 @@ function AnimatingParagraph(
 
   useEffect(() => {
     toggleAnimation();
-  }, [toggleAnimation]);
+  }, []);
 
   return (
     <p ref={ref} style={{ opacity }}>

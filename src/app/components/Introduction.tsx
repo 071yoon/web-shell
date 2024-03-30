@@ -8,15 +8,13 @@ export default function Introduction() {
   return (
     <div>
       <AnimatingParagraph ref={ref}>
-        {`Hi, I'm yeonggi. I'm a student in South Korea. 
+        {`Hi, I'm YeongGi Yoon. I'm a Software Developer in South Korea. 
         `}
         <br />
         {`
-        I'm interested in shell scripting and web development. 
-        I'm studying shell scripting and web development.
+        I'm specially interested in web development. 
         `}
         <br />
-        {`I'm studying shell scripting and web development.`}
       </AnimatingParagraph>
     </div>
   );
