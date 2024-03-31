@@ -18,5 +18,6 @@ const ResultContainer = styled.div`
 
   p {
     margin: 0;
+    white-space: pre;
   }
 `;

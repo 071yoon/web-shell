@@ -13,7 +13,16 @@
             "children": {
               "modoco": {
                 "name": "modoco",
-                "type": "file"
+                "type": "file",
+                "data": {
+                  "title": "modoco",
+                  "date": "2022-06 - 2022-12",
+                  "description": "modoco project sponsored by SW Maestro",
+                  "role": "Frontend Developer",
+                  "stack": ["React", "TypeScript", "Styled-Components"],
+                  "link": "https://modocode.com",
+                  "source": "https://github.com/SWM-FIRE/modoco-frontend"
+                }
               }
             }
           },

@@ -36,7 +36,18 @@ export const inputHandler = ({
     inputCallback(commandBefore + terminalLocation.getPath());
   } else if (command === "ls") {
     const children = terminalLocation.getChildren();
-    inputCallback(commandBefore + Object.keys(children).join(" "));
+    const childrenKeys = Object.keys(children);
+    inputCallback(
+      commandBefore +
+        childrenKeys
+          .map((child) => {
+            const singleChild = (children as { [key: string]: any })[child];
+            return `${
+              singleChild.type === "folder" ? "drwxr-xr-x" : "-rw-r--r--"
+            }   ${singleChild.name}`;
+          })
+          .join("\n")
+    );
   } else {
     inputCallback(commandBefore + `Command not found: ${command}`);
   }
@@ -62,7 +73,7 @@ const helpHandler = (
   return inputCallback(
     preCommand(result, inputString) +
       `Available commands:
-    - help: show this message
+    - help: list all commands
     - clear: clear the screen
     - echo: repeat the input
     - ls: list all files
