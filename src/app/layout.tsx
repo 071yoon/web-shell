@@ -23,7 +23,7 @@ export default function RootLayout({
         style={{
           backgroundColor: "black",
           padding: "0.4rem",
-          color: "#008304",
+          color: "#d2d2d2",
         }}
       >
         <main>{children}</main>

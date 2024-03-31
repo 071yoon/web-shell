@@ -1,27 +1,34 @@
 "use client";
-import { keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
 import { useState } from "react";
 
 export default function Input() {
   const [inputData, setInputData] = useState("");
   return (
-    <Container>
-      {`> `}
-      <InputContainer>{inputData}</InputContainer>
-      <Cursor />
-      <HiddenInput autoFocus onChange={(e) => setInputData(e.target.value)} />
-    </Container>
+    <>
+      <Container htmlFor="hiddenInput">
+        {`> `}
+        <InputContainer>{inputData}</InputContainer>
+        <Cursor />
+      </Container>
+      <HiddenInput
+        autoFocus
+        id="hiddenInput"
+        onChange={(e) => setInputData(e.target.value)}
+      />
+    </>
   );
 }
 
-const Container = styled.div`
+const Container = styled.label`
   display: flex;
   align-items: center;
-  background-color: #1a1a1a;
   color: white;
   padding: 0.5rem;
   border-radius: 0.5rem;
+  white-space: pre;
+
+  cursor: text;
 `;
 
 const InputContainer = styled.div`
@@ -39,13 +46,5 @@ const HiddenInput = styled.input`
 const Cursor = styled.div`
   width: 0.5rem;
   height: 1rem;
-  background-color: white;
-  animation: ${keyframes`
-        0% {
-        opacity: 0;
-        }
-        100% {
-        opacity: 1;
-        }
-    `} 1s infinite;
+  background-color: #f0aa26;
 `;
