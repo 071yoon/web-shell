@@ -32,11 +32,25 @@
             "children": {
               "toss": {
                 "name": "toss",
-                "type": "file"
+                "type": "file",
+                "data": {
+                  "title": "toss(Viva Republica)",
+                  "date": "2023-01 - 2023-06",
+                  "description": "UX Engineer Assistant at toss",
+                  "role": "UX Engineer Assistant",
+                  "stack": ["React", "TypeScript", "Emotion"]
+                }
               },
               "hyundai-autoever": {
                 "name": "hyundai-autoever",
-                "type": "file"
+                "type": "file",
+                "data": {
+                  "title": "Hyundai-AutoEver",
+                  "date": "2024-01 -",
+                  "description": "Software Engineer at Hyundai-AutoEver",
+                  "role": "Software Engineer",
+                  "stack": ["Spring", "Web"]
+                }
               }
             }
           },

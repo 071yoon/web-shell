@@ -87,6 +87,7 @@ const cdHandler = (inputParams: Array<string>) => {
   // ex. cd ../../home/yeonggi -> ["cd", "..", "..", "home", "yeonggi"]
   const newPath = inputParams[1];
   const targetPath = newPath.split("/");
+  const originalPath = terminalLocation.getBackupPath();
   if (targetPath[0] === "") {
     terminalLocation.setToRoot();
     return 1;
@@ -98,6 +99,7 @@ const cdHandler = (inputParams: Array<string>) => {
       continue;
     } else {
       if (!terminalLocation.changeDirectory(path)) {
+        terminalLocation.setToBackupPath(originalPath);
         return false;
       }
     }

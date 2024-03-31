@@ -65,4 +65,12 @@ export default class TerminalLocation {
       return null;
     }
   }
+
+  public getBackupPath(): Array<string> {
+    return this.path;
+  }
+
+  public setToBackupPath(backup: Array<string>): void {
+    this.path = backup;
+  }
 }
