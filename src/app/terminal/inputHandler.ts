@@ -14,7 +14,9 @@ export const inputHandler = ({
   const inputParams = inputData.split(" ");
   const command = inputParams[0];
   const commandBefore = preCommand(result, inputData);
-  if (command === "help") {
+  if (command === "") {
+    inputCallback(commandBefore);
+  } else if (command === "help") {
     helpHandler(result, inputData, inputCallback);
   } else if (command === "clear") {
     inputCallback("");
@@ -36,7 +38,7 @@ export const inputHandler = ({
     const children = terminalLocation.getChildren();
     inputCallback(commandBefore + Object.keys(children).join(" "));
   } else {
-    inputCallback(`Command not found: ${command}`);
+    inputCallback(commandBefore + `Command not found: ${command}`);
   }
 };
 

@@ -12,7 +12,10 @@ export default class TerminalLocation {
     // terminalData["root"]
     let currentLocation = terminalData["root"];
     for (const location of this.path.slice(1)) {
-      currentLocation = currentLocation.children[location];
+      // TODO: fix json type
+      currentLocation = (currentLocation.children as { [key: string]: any })[
+        location
+      ];
     }
     return currentLocation;
   }
