@@ -52,9 +52,17 @@ export default class TerminalLocation {
     if (this.path.length > 1) this.path.pop();
   }
 
-  public getChildren(): Object {
+  public getChildren(): any {
     const currentLocation = this.getCurrentLocation();
     if (currentLocation === undefined) return {};
     return currentLocation.children;
+  }
+
+  public getData(target: string): any {
+    try {
+      return this.getChildren()[target].data;
+    } catch {
+      return null;
+    }
   }
 }

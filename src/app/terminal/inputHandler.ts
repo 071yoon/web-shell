@@ -35,19 +35,9 @@ export const inputHandler = ({
   } else if (command === "pwd") {
     inputCallback(commandBefore + terminalLocation.getPath());
   } else if (command === "ls") {
-    const children = terminalLocation.getChildren();
-    const childrenKeys = Object.keys(children);
-    inputCallback(
-      commandBefore +
-        childrenKeys
-          .map((child) => {
-            const singleChild = (children as { [key: string]: any })[child];
-            return `${
-              singleChild.type === "folder" ? "drwxr-xr-x" : "-rw-r--r--"
-            }   ${singleChild.name}`;
-          })
-          .join("\n")
-    );
+    lsHandler(commandBefore, inputCallback);
+  } else if (command === "cat") {
+    catHandler(inputParams, commandBefore, inputCallback);
   } else {
     inputCallback(commandBefore + `Command not found: ${command}`);
   }
@@ -113,4 +103,44 @@ const cdHandler = (inputParams: Array<string>) => {
     }
   }
   return true;
+};
+
+const lsHandler = (
+  commandBefore: string,
+  inputCallback: (key: string) => void
+) => {
+  const children = terminalLocation.getChildren();
+  const childrenKeys = Object.keys(children);
+  inputCallback(
+    commandBefore +
+      childrenKeys
+        .map((child) => {
+          const singleChild = (children as { [key: string]: any })[child];
+          return `${
+            singleChild.type === "folder" ? "drwxr-xr-x" : "-rw-r--r--"
+          }   ${singleChild.name}`;
+        })
+        .join("\n")
+  );
+};
+
+const catHandler = (
+  inputParams: Array<string>,
+  commandBefore: string,
+  inputCallback: (key: string) => void
+) => {
+  if (inputParams.length === 1) {
+    inputCallback(commandBefore + "cat: missing operand");
+  } else {
+    const targetFile = terminalLocation.getData(inputParams[1]);
+    if (targetFile) {
+      console.log(targetFile);
+      const content = Object.keys(targetFile).map((key) => {
+        return `${key}: ${targetFile[key]}`;
+      });
+      inputCallback(commandBefore + content.join("\n"));
+    } else {
+      inputCallback(commandBefore + `cat: "${inputParams[1]}" No such file`);
+    }
+  }
 };
