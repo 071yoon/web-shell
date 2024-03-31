@@ -18,7 +18,7 @@ function AnimatingParagraph(
   }, []);
 
   return (
-    <p ref={ref} style={{ opacity }}>
+    <p ref={ref} style={{ opacity: opacity, whiteSpace: "pre-line" }}>
       {children}
     </p>
   );

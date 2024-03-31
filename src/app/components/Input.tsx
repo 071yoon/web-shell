@@ -1,9 +1,24 @@
 "use client";
 import styled from "@emotion/styled";
 import { useState } from "react";
+import { inputHandler } from "../terminal/inputHandler";
 
-export default function Input() {
+export default function Input({
+  setResult,
+  result,
+}: {
+  setResult: (result: string) => void;
+  result: string;
+}) {
   const [inputData, setInputData] = useState("");
+
+  const handleOnKeyPress = (e: { key: string }) => {
+    if (e.key === "Enter") {
+      inputHandler({ inputData, inputCallback: setResult, result });
+      setInputData("");
+    }
+  };
+
   return (
     <>
       <Container htmlFor="hiddenInput">
@@ -14,7 +29,9 @@ export default function Input() {
       <HiddenInput
         autoFocus
         id="hiddenInput"
+        value={inputData}
         onChange={(e) => setInputData(e.target.value)}
+        onKeyDown={handleOnKeyPress}
       />
     </>
   );
