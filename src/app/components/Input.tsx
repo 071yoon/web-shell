@@ -11,11 +11,20 @@ export default function Input({
   result: string;
 }) {
   const [inputData, setInputData] = useState("");
+  const [cursorIndex, setCursorIndex] = useState(0);
 
   const handleOnKeyPress = (e: { key: string }) => {
     if (e.key === "Enter") {
       inputHandler({ inputData, inputCallback: setResult, result });
       setInputData("");
+    }
+
+    if (e.key === "ArrowLeft") {
+      setCursorIndex((prev) => Math.max(0, prev - 1));
+    }
+
+    if (e.key === "ArrowRight") {
+      setCursorIndex((prev) => Math.min(inputData.length, prev + 1));
     }
   };
 
@@ -23,14 +32,30 @@ export default function Input({
     <>
       <Container htmlFor="hiddenInput">
         {`> `}
-        <InputContainer>{inputData}</InputContainer>
-        <Cursor />
+        <InputContainer>
+          {Array.from(inputData).map((singleInput, index) => {
+            if (index === cursorIndex) {
+              return (
+                <Cursor key={Symbol(index).toString()}>
+                  <p>{singleInput}</p>
+                </Cursor>
+              );
+            }
+            return <p key={Symbol(index).toString()}>{singleInput}</p>;
+          })}
+          {(cursorIndex === inputData.length || inputData.length === 0) && (
+            <Cursor />
+          )}
+        </InputContainer>
       </Container>
       <HiddenInput
         autoFocus
         id="hiddenInput"
         value={inputData}
-        onChange={(e) => setInputData(e.target.value)}
+        onChange={(e) => {
+          setInputData(e.target.value);
+          setCursorIndex(e.target.selectionStart || 0);
+        }}
         onKeyDown={handleOnKeyPress}
       />
     </>
@@ -52,6 +77,12 @@ const InputContainer = styled.div`
   border: none;
   color: white;
   background-color: transparent;
+  display: flex;
+  align-items: center;
+
+  p {
+    margin: 0;
+  }
 `;
 
 const HiddenInput = styled.input`
