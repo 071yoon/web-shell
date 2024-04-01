@@ -3,7 +3,7 @@ import "../css/normalize.css";
 import localFont from "next/font/local";
 
 const myFont = localFont({
-  src: "./fonts/neodgm_code.woff2",
+  src: "../fonts/neodgm_code.woff2",
   display: "swap",
 });
 

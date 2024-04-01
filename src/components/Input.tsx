@@ -14,6 +14,8 @@ export default function Input({
   const [cursorIndex, setCursorIndex] = useState(0);
 
   const handleOnKeyPress = (e: { key: string }) => {
+    if (window) window.scrollTo(0, document.body.scrollHeight);
+
     if (e.key === "Enter") {
       inputHandler({ inputData, inputCallback: setResult, result });
       setInputData("");
@@ -52,6 +54,7 @@ export default function Input({
         autoFocus
         id="hiddenInput"
         value={inputData}
+        autoComplete="off"
         onChange={(e) => {
           setInputData(e.target.value);
           setCursorIndex(e.target.selectionStart || 0);
@@ -86,9 +89,7 @@ const InputContainer = styled.div`
 `;
 
 const HiddenInput = styled.input`
-  position: absolute;
-  top: -9999px;
-  left: -9999px;
+  opacity: 0;
 `;
 
 const Cursor = styled.div`
