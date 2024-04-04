@@ -1,11 +1,10 @@
 import styled from "@emotion/styled";
+import ConvertMarkdown from "./ConvertMarkdown";
 
 export default function Result({ result }: { result: string }) {
   return (
     <ResultContainer>
-      {result.split("\n").map((line, index) => {
-        return <p key={index}>{line}</p>;
-      })}
+      <ConvertMarkdown result={result} />
     </ResultContainer>
   );
 }
