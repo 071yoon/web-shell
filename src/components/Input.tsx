@@ -1,7 +1,8 @@
 "use client";
 import styled from "@emotion/styled";
-import { useState } from "react";
+import { KeyboardEvent, useEffect, useState } from "react";
 import { inputHandler } from "../terminal/inputHandler";
+import { tabHandler } from "@/terminal/tabHandler";
 
 export default function Input({
   setResult,
@@ -13,9 +14,12 @@ export default function Input({
   const [inputData, setInputData] = useState("");
   const [cursorIndex, setCursorIndex] = useState(0);
 
-  const handleOnKeyPress = (e: { key: string }) => {
-    if (window) window.scrollTo(0, document.body.scrollHeight);
+  // scroll to bottom when ever result triggers
+  useEffect(() => {
+    window.scrollTo(0, document.body.scrollHeight);
+  }, [result]);
 
+  const handleOnKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       inputHandler({ inputData, inputCallback: setResult, result });
       setInputData("");
@@ -27,6 +31,13 @@ export default function Input({
 
     if (e.key === "ArrowRight") {
       setCursorIndex((prev) => Math.min(inputData.length, prev + 1));
+    }
+
+    if (e.key === "Tab") {
+      e.preventDefault();
+      if (inputData.split(" ").length > 1) {
+        tabHandler({ inputData });
+      }
     }
   };
 
