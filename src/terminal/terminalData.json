@@ -60,6 +60,20 @@
           }
         }
       },
+      "folder1": {
+        "name": "folder1",
+        "type": "folder",
+        "children": {
+          "file3": {
+            "name": "file1",
+            "type": "file"
+          },
+          "file4": {
+            "name": "file2",
+            "type": "file"
+          }
+        }
+      },
       "folder2": {
         "name": "folder2",
         "type": "folder",
@@ -70,6 +84,20 @@
           },
           "file4": {
             "name": "file4",
+            "type": "file"
+          }
+        }
+      },
+      "fols": {
+        "name": "fols",
+        "type": "folder",
+        "children": {
+          "file3": {
+            "name": "file1",
+            "type": "file"
+          },
+          "file4": {
+            "name": "file2",
             "type": "file"
           }
         }

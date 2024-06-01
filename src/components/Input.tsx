@@ -1,8 +1,7 @@
 "use client";
 import styled from "@emotion/styled";
-import { KeyboardEvent, useEffect, useState } from "react";
-import { inputHandler } from "../terminal/inputHandler";
-import { tabHandler } from "@/terminal/tabHandler";
+import { KeyboardEvent, useEffect, useRef, useState } from "react";
+import { inputHandler, tabHandler } from "../terminal/inputHandler";
 
 export default function Input({
   setResult,
@@ -13,6 +12,7 @@ export default function Input({
 }) {
   const [inputData, setInputData] = useState("");
   const [cursorIndex, setCursorIndex] = useState(0);
+  const [searched, setSearched] = useState<string[]>([]);
 
   // scroll to bottom when ever result triggers
   useEffect(() => {
@@ -21,7 +21,12 @@ export default function Input({
 
   const handleOnKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      inputHandler({ inputData, inputCallback: setResult, result });
+      setSearched([]);
+      inputHandler({
+        inputData,
+        inputCallback: setResult,
+        result,
+      });
       setInputData("");
     }
 
@@ -35,9 +40,12 @@ export default function Input({
 
     if (e.key === "Tab") {
       e.preventDefault();
-      if (inputData.split(" ").length > 1) {
-        tabHandler({ inputData });
-      }
+      tabHandler({
+        inputData,
+        inputCallback: setInputData,
+        setCursorIndex,
+        setSearched,
+      });
     }
   };
 
@@ -61,6 +69,11 @@ export default function Input({
           )}
         </InputContainer>
       </Container>
+      <SearchContainer>
+        {searched.map((search) => (
+          <p key={search}>{search}</p>
+        ))}
+      </SearchContainer>
       <HiddenInput
         autoFocus
         id="hiddenInput"
@@ -107,4 +120,10 @@ const Cursor = styled.div`
   width: 0.5rem;
   height: 1rem;
   background-color: #f0aa26;
+`;
+
+const SearchContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 `;

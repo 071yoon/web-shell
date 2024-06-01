@@ -2,8 +2,15 @@ import terminalData from "./terminalData.json";
 
 export default class TerminalLocation {
   private path: Array<string>;
+  private searchCnt: number;
+  private isSearching: boolean;
+  private currentSearchingWord: string;
+
   constructor() {
     this.path = ["root"];
+    this.searchCnt = 0;
+    this.isSearching = false;
+    this.currentSearchingWord = "";
   }
 
   private getCurrentLocation(): any {
@@ -72,5 +79,37 @@ export default class TerminalLocation {
 
   public setToBackupPath(backup: Array<string>): void {
     this.path = backup;
+  }
+
+  public getSearchCnt(): number {
+    return this.searchCnt;
+  }
+
+  public incrementSearchCnt(total: number): number {
+    this.searchCnt = (this.searchCnt + 1) % total;
+    return this.searchCnt;
+  }
+
+  public initSearch(): void {
+    this.searchCnt = 0;
+    this.isSearching = false;
+    this.currentSearchingWord = "";
+  }
+
+  public getIsSearching(): boolean {
+    return this.isSearching;
+  }
+
+  public toggleIsSearching(): boolean {
+    this.isSearching = !this.isSearching;
+    return this.isSearching;
+  }
+
+  public getCurrentSearchingWord(): string {
+    return this.currentSearchingWord;
+  }
+
+  public setCurrentSearchingWord(word: string): void {
+    this.currentSearchingWord = word;
   }
 }
