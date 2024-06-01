@@ -18,7 +18,7 @@
                   "title": "modoco",
                   "date": "2022-06 - 2022-12",
                   "description": "modoco project sponsored by SW Maestro",
-                  "role": "Frontend Developer",
+                  "role": "**Frontend Developer**",
                   "stack": ["React", "TypeScript", "Styled-Components"],
                   "link": "https://modocode.com",
                   "source": "https://github.com/SWM-FIRE/modoco-frontend"
@@ -38,7 +38,8 @@
                   "date": "2023-01 - 2023-06",
                   "description": "UX Engineer Assistant at toss",
                   "role": "UX Engineer Assistant",
-                  "stack": ["React", "TypeScript", "Emotion"]
+                  "stack": ["React", "TypeScript", "Emotion"],
+                  "details": "\n- Developed and maintained the Toss Design System([TDS](https://toss.im/slash-22/sessions/1-3))\n- Developed and maintained the Toss Animation Library([Rally](https://toss.im/slash-23/session-detail/B2-2))"
                 }
               },
               "hyundai-autoever": {
@@ -49,14 +50,11 @@
                   "date": "2024-01 -",
                   "description": "Software Engineer at Hyundai-AutoEver",
                   "role": "Software Engineer",
-                  "stack": ["Spring", "Web"]
+                  "stack": ["Spring", "Web", "React"],
+                  "details": "\n- Developed and maintained the Hyundai SmartTag System"
                 }
               }
             }
-          },
-          "file1": {
-            "name": "file1",
-            "type": "file"
           }
         }
       },

@@ -2,6 +2,48 @@ import TerminalLocation from "./terminalLocation";
 
 const terminalLocation = new TerminalLocation();
 
+const whoamiData = `
+
+| ##########################&st;&st;++++++++++++++&eq;&eq;&eq;&eq;------------&eq;&eq; Hi there! I'm YeongGi Yoon, a software engineer based in Seoul, South Korea.
+| #########################&st;++++++++++++++&eq;------------------- I'm passionate about building software that makes a difference in the world.
+| #################@%%%#######&st;+++++++++&eq;---------------------
+| ################@@%%%@@@%%%@#+++++++&eq;----------------------- Here are some of the technologies I've been working with recently:
+| ################@@@%@%%%%%@%&st;++++++------------------------- - JavaScript (ES6+)
+| ################@@%%%%%%@@#+++++++-----------::::...:::----- - React
+| ###############@@%%%%%@&st;-++&st;&eq;&eq;+@%&st;&eq;--------::...........::-- - Node.js
+| #############%@@%%%@@@&eq;..&eq;-&st;+&eq;+@%@@@#&st;&eq;---:...............:- - TypeScript
+| ##############@%%%@@##&eq;.-&eq;&st;+&eq;&eq;+@%%%%%@#--:.................: - Java
+| #################%@++#@&st;++&eq;&st;###@%%%%%@#--:.................. - Spring Boot
+| ################%+    &st;%+++%%&st;##%@%%%@#--:......&eq;........... 
+| ##############%%&st;.    +@-+%&st;%%@@##%@@@%+&eq;-:.....#........... 
+| ##############@&st;-..&st;   +&eq;%@#%--#@%&st;&eq;#@#&eq;+&st;--::.&eq;@&st;#&eq;....::-- I'm currently looking for new opportunities, 
+| #############%#&eq;: .+&st;.      &st;-&st;@#&st;+&st;&st;+----#&st;---%&st;&st;&st;&eq;-------- so feel free to reach out to me if you think I can help you with your project!
+| #############@#&st;-. .&st;&st;-.  .+#&st;%@#&st;+&eq;--&eq;+#&st;%%----+%--------&eq;&eq; 
+| ############%%&eq;&st;&st;&st;+-.:&eq;&eq;&eq;%#&st;+-&eq;&eq;+%#&st;#%&st;+&eq;&eq;&eq;%++++&st;%++++++++++ 
+| ###########%%---:        .+%@&st;#&eq;--%+------&eq;%++++&st;%++++++++++ contact: yeonggi@kakao.com
+| ########%%%@----.        &eq;###--%--%+------&eq;%+++&st;#%%&st;++++++++ github: https://github.com/071yoon
+| ######%%%%@+---:        +#.:#@%@+&eq;%+&eq;&eq;&eq;&eq;&eq;&st;#&st;++%%++##++++++++ 
+| ####%%%%%%@@@@#&st;++.....+@@%%%%%%@@@@@@@@%&st;++++#####&st;++++++++
+| ###%%%%%%%%%%%%%%%@@@%%#%%%%%%%%%%%%%%%#&st;+++++++++++++++++++
+| ###%%%%%%%%%%%%%%%%###########&st;&st;&st;&st;&st;&st;&st;&st;&st;+++++++++++++++++++++
+| ###%%%%%%%%%%%##################&st;&st;++++++++++++++++++++++++++
+| ##################################&st;&st;++++++++++++++++++++++++
+
+`;
+
+const helpData = `
+Available commands:
+- help: list all commands
+- clear: clear the screen
+- echo: repeat the input
+- ls: list all files
+- cat: show the content of a file
+- cd: change directory
+- pwd: show the current directory
+- whoami: show the current user
+- exit: close the terminal
+`;
+
 export const inputHandler = ({
   inputData,
   inputCallback,
@@ -40,6 +82,10 @@ export const inputHandler = ({
     lsHandler(commandBefore, inputCallback);
   } else if (command === "cat") {
     catHandler(inputParams, commandBefore, inputCallback);
+  } else if (command === "exit") {
+    window.close();
+  } else if (command === "whoami") {
+    inputCallback(commandBefore + whoamiData);
   } else {
     inputCallback(commandBefore + `Command not found: ${command}`);
   }
@@ -54,7 +100,7 @@ const addResultLineBreak = (result: string) => {
 };
 
 const addInputLineBreak = (input: string) => {
-  return "> " + input + "\n";
+  return "&gt; " + input + "\n";
 };
 
 const helpHandler = (
@@ -62,25 +108,7 @@ const helpHandler = (
   inputString: string,
   inputCallback: (input: string) => void
 ) => {
-  return inputCallback(
-    preCommand(result, inputString) +
-      `Available commands:
-    - help: list all commands
-    - clear: clear the screen
-    - echo: repeat the input
-    - ls: list all files
-    - cat: show the content of a file
-    - cd: change directory
-    - pwd: show the current directory
-    - mkdir: create a new directory
-    - touch: create a new file
-    - rm: remove a file or directory
-    - mv: move a file or directory
-    - cp: copy a file or directory
-    - whoami: show the current user
-    - date: show the current date
-    - exit: close the terminal`
-  );
+  return inputCallback(preCommand(result, inputString) + helpData);
 };
 
 const cdHandler = (inputParams: Array<string>) => {
