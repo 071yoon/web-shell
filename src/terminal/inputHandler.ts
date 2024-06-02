@@ -185,11 +185,13 @@ export const tabHandler = ({
   inputCallback,
   setCursorIndex,
   setSearched,
+  setSearchedIndex,
 }: {
   inputData: string;
   inputCallback: (input: string) => void;
   setCursorIndex: (index: number) => void;
   setSearched: (searched: Array<string>) => void;
+  setSearchedIndex: (index: number) => void;
 }) => {
   // 1. TRIE 항목이 있다면 -> TRIE되는 항목(중복되는 string) 까지 input 표시
   // 2. 이제 TRIE 할 항목이 끝났는데 아직 선택 할 수 있는 하위 항목이 있는 경우 -> 아래에 표시
@@ -218,12 +220,13 @@ export const tabHandler = ({
       i++;
     }
     return prev.slice(0, i);
-  });
+  }, filteredObjects[0] || "");
 
   // 이미 Tab으로 찾고있는 상황이라면 3번
   // TODO: function 상단으로 빼도 작동해야됨
   if (terminalLocation.getIsSearching()) {
     console.log("this is filtered", filteredObjects);
+    setSearchedIndex(terminalLocation.getSearchCnt());
     const searchedIndex = terminalLocation.getSearchCnt();
     if (filteredObjects.length > searchedIndex) {
       const newInputData =
@@ -241,6 +244,20 @@ export const tabHandler = ({
     return;
   }
 
+  if (filteredObjects.length === 1) {
+    const newInputData =
+      inputData
+        .split(" ")
+        .slice(0, inputData.split(" ").length - 1)
+        .join(" ") +
+      " " +
+      commonString;
+    inputCallback(newInputData);
+    setCursorIndex(newInputData.length);
+    terminalLocation.initSearch();
+    return;
+  }
+
   // commonString 이 searchData 와 같다면
   // filtered 된 항목들 보여주기 -> 2번
   if (commonString === searchData) {
@@ -252,19 +269,6 @@ export const tabHandler = ({
   if (filteredObjects.length === 0) {
     return;
   }
-  if (filteredObjects.length === 1) {
-    const newInputData =
-      inputData
-        .split(" ")
-        .slice(0, inputData.split(" ").length - 1)
-        .join(" ") +
-      " " +
-      commonString;
-    inputCallback(newInputData);
-    setCursorIndex(newInputData.length);
-    return;
-  }
-
   const newInputData =
     inputData
       .split(" ")

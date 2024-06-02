@@ -1,6 +1,6 @@
 "use client";
 import styled from "@emotion/styled";
-import { KeyboardEvent, useEffect, useRef, useState } from "react";
+import { KeyboardEvent, useEffect, useState } from "react";
 import { inputHandler, tabHandler } from "../terminal/inputHandler";
 
 export default function Input({
@@ -13,6 +13,7 @@ export default function Input({
   const [inputData, setInputData] = useState("");
   const [cursorIndex, setCursorIndex] = useState(0);
   const [searched, setSearched] = useState<string[]>([]);
+  const [searchedIndex, setSearchedIndex] = useState(-1);
 
   // scroll to bottom when ever result triggers
   useEffect(() => {
@@ -27,6 +28,7 @@ export default function Input({
         inputCallback: setResult,
         result,
       });
+      setSearchedIndex(-1);
       setInputData("");
     }
 
@@ -45,6 +47,7 @@ export default function Input({
         inputCallback: setInputData,
         setCursorIndex,
         setSearched,
+        setSearchedIndex,
       });
     }
   };
@@ -70,9 +73,21 @@ export default function Input({
         </InputContainer>
       </Container>
       <SearchContainer>
-        {searched.map((search) => (
-          <p key={search}>{search}</p>
-        ))}
+        {searched.map((search, idx) => {
+          if (idx === searchedIndex) {
+            return (
+              <p
+                key={search}
+                style={{
+                  color: "white",
+                }}
+              >
+                {search}
+              </p>
+            );
+          }
+          return <p key={search}>{search}</p>;
+        })}
       </SearchContainer>
       <HiddenInput
         autoFocus
