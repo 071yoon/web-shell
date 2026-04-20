@@ -51,10 +51,24 @@
                   "description": "Software Engineer at Hyundai-AutoEver",
                   "role": "Software Engineer",
                   "stack": ["Spring", "Web", "React"],
-                  "details": "\n- Developed and maintained the Hyundai SmartTag System"
+                  "details": "\n- Developed and maintained the Hyundai SmartTag System\n"
                 }
               }
             }
+          }
+        }
+      },
+      "folder1": {
+        "name": "folder1",
+        "type": "folder",
+        "children": {
+          "file3": {
+            "name": "file1",
+            "type": "file"
+          },
+          "file4": {
+            "name": "file2",
+            "type": "file"
           }
         }
       },
@@ -68,6 +82,20 @@
           },
           "file4": {
             "name": "file4",
+            "type": "file"
+          }
+        }
+      },
+      "fols": {
+        "name": "fols",
+        "type": "folder",
+        "children": {
+          "file3": {
+            "name": "file1",
+            "type": "file"
+          },
+          "file4": {
+            "name": "file2",
             "type": "file"
           }
         }

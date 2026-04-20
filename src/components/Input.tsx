@@ -1,7 +1,7 @@
 "use client";
 import styled from "@emotion/styled";
-import { useState } from "react";
-import { inputHandler } from "../terminal/inputHandler";
+import { KeyboardEvent, useEffect, useState } from "react";
+import { inputHandler, tabHandler } from "../terminal/inputHandler";
 
 export default function Input({
   setResult,
@@ -12,12 +12,23 @@ export default function Input({
 }) {
   const [inputData, setInputData] = useState("");
   const [cursorIndex, setCursorIndex] = useState(0);
+  const [searched, setSearched] = useState<string[]>([]);
+  const [searchedIndex, setSearchedIndex] = useState(-1);
 
-  const handleOnKeyPress = (e: { key: string }) => {
-    if (window) window.scrollTo(0, document.body.scrollHeight);
+  // scroll to bottom when ever result triggers
+  useEffect(() => {
+    window.scrollTo(0, document.body.scrollHeight);
+  }, [result]);
 
+  const handleOnKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      inputHandler({ inputData, inputCallback: setResult, result });
+      setSearched([]);
+      inputHandler({
+        inputData,
+        inputCallback: setResult,
+        result,
+      });
+      setSearchedIndex(-1);
       setInputData("");
     }
 
@@ -27,6 +38,17 @@ export default function Input({
 
     if (e.key === "ArrowRight") {
       setCursorIndex((prev) => Math.min(inputData.length, prev + 1));
+    }
+
+    if (e.key === "Tab") {
+      e.preventDefault();
+      tabHandler({
+        inputData,
+        inputCallback: setInputData,
+        setCursorIndex,
+        setSearched,
+        setSearchedIndex,
+      });
     }
   };
 
@@ -50,6 +72,23 @@ export default function Input({
           )}
         </InputContainer>
       </Container>
+      <SearchContainer>
+        {searched.map((search, idx) => {
+          if (idx === searchedIndex) {
+            return (
+              <p
+                key={search}
+                style={{
+                  color: "white",
+                }}
+              >
+                {search}
+              </p>
+            );
+          }
+          return <p key={search}>{search}</p>;
+        })}
+      </SearchContainer>
       <HiddenInput
         autoFocus
         id="hiddenInput"
@@ -96,4 +135,10 @@ const Cursor = styled.div`
   width: 0.5rem;
   height: 1rem;
   background-color: #f0aa26;
+`;
+
+const SearchContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 `;
